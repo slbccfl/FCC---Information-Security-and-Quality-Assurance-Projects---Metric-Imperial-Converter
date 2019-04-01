@@ -10,12 +10,21 @@ function ConvertHandler() {
   
   this.getNum = function(input) {
     var result;
-    
+    result = input.match('/\d+(\.\d+)?/')
+    console.log(result);
     return result;
   };
   
   this.getUnit = function(input) {
     var result;
+    
+    if (input.includes("gal")) result = 'gal';
+    if (input.includes("L")) result = 'L';
+    if (input.includes("lbs")) result = 'lbs';
+    if (input.includes("kg")) result = 'kg';
+    if (input.includes("mi")) result = 'mi';
+    if (input.includes("km")) result = 'km';
+    if (result == undefined) result = 'invalid unit';
     
     return result;
   };
@@ -43,7 +52,7 @@ function ConvertHandler() {
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     var result;
-    
+    result = {"initNum": initNum, "initUnit": initUnit, "returnNum": returnNum, "returnUnit": returnUnit}
     return result;
   };
   
