@@ -10,8 +10,10 @@ function ConvertHandler() {
   
   this.getNum = function(input) {
     var result;
-    var numString = input.match(/\d+(\.\d+)?(\/\d+(\.\d+)?)?/)
+    var numString = input.match(/\d+(\.\d+)?(\/\d+(\.\d+)?)*/)[0]
     if (numString == null) return 1;
+    console.log(numString)
+    if (numString.split('/').length > 2) return 'invalid number'
     var denom = numString.split('/',2)[1] 
     if (denom == undefined) denom = 1
     result = numString.split('/',2)[0] / denom
