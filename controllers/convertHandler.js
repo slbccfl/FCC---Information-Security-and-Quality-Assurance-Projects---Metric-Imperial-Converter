@@ -10,8 +10,11 @@ function ConvertHandler() {
   
   this.getNum = function(input) {
     var result;
-    result = input.match(/\d+(\.\d+)?/)[0]
-    console.log(result);
+    var numString = input.match(/\d+(\.\d+)?(\/\d+(\.\d+)?)?/)
+    if (numString == null) return 1;
+    var denom = numString.split('/',2)[1] 
+    if (denom == undefined) denom = 1
+    result = numString.split('/',2)[0] / denom
     return result;
   };
   
@@ -47,7 +50,7 @@ function ConvertHandler() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
-    var convertFactor = {'gal':3.78541, 'L':3.78541/1, 'lbs':0.453592, 'kg':0.453592/1, 'mi':1.60934, 'km': 1.60934/1}
+    var convertFactor = {'gal':3.78541, 'L':1/3.78541, 'lbs':0.453592, 'kg':1/0.453592, 'mi':1.60934, 'km': 1/1.60934}
     var result;
     result = initNum * convertFactor[initUnit];
     return result;
@@ -55,7 +58,12 @@ function ConvertHandler() {
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
     var result;
-    result = {"initNum": initNum, "initUnit": initUnit, "returnNum": returnNum, "returnUnit": returnUnit}
+    result = {'initNum': initNum,
+              'initUnit': initUnit,
+              'returnNum': returnNum,
+              'returnUnit': returnUnit,
+              'string': initNum + ' ' + this.spellOutUnit(initUnit) + ' converts to ' + returnNum + ' ' + this.spellOutUnit(returnUnit)
+             }
     return result;
   };
   
