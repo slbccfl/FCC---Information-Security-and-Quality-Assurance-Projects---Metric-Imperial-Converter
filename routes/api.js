@@ -18,12 +18,11 @@ module.exports = function (app) {
   app.route('/api/convert')
     .get(function (req, res){
       var input = req.query.input;
-      console.log(input);
+      // console.log(input);
       var initNum = convertHandler.getNum(input);
+      // console.log(initNum);
       var initUnit = convertHandler.getUnit(input);
-      var returnNum = convertHandler.convert(initNum, initUnit);
-      var returnUnit = convertHandler.getReturnUnit(initUnit);
-      var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+      // console.log(initUnit);
       
       if (initNum == 'invalid number' && initUnit == 'invalid unit') {
           res.send('invalid number and unit')
@@ -33,7 +32,13 @@ module.exports = function (app) {
         } else {
           if (initUnit == 'invalid unit') {
             res.send(initUnit)
-          } else {
+          } else { 
+            var returnNum = convertHandler.convert(initNum, initUnit);
+            // console.log(returnNum);
+            var returnUnit = convertHandler.getReturnUnit(initUnit);
+            // console.log(returnUnit);
+            var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
+            // console.log(toString);
             res.json(toString);
           }
         }
