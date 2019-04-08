@@ -13,8 +13,6 @@ function ConvertHandler() {
     var regexResult = input.match(/\d+(\.\d+)?(\/\d+(\.\d+)?)*/)
     if (regexResult == null) return 1;
     var numString = regexResult[0]
-    console.log(numString);
-    console.log(numString)
     if (numString.split('/').length > 2) return 'invalid number'
     var denom = numString.split('/',2)[1] 
     if (denom == undefined) denom = 1
@@ -23,30 +21,27 @@ function ConvertHandler() {
   };
   
   this.getUnit = function(input) {
+    var validUnits = ['gal','l','mi','km','lbs','kg'];
     var result;
-    
-    if (input.includes("gal")) result = 'gal';
-    if (input.includes("L")) result = 'L';
-    if (input.includes("lbs")) result = 'lbs';
-    if (input.includes("kg")) result = 'kg';
-    if (input.includes("mi")) result = 'mi';
-    if (input.includes("km")) result = 'km';
-    if (result == undefined) result = 'invalid unit';
-    
+    var unitInput = input.toLowerCase().match(/[a-z]*/)[0];
+    // console.log('getUnit unitInput: ' + unitInput); 
+    validUnits.includes(unitInput) ? result = unitInput : result = 'invalid unit'; 
+    // console.log('getUnit input: ' + input); 
+    // console.log('getUnit result: ' + result);
     return result;
   };
   
   this.getReturnUnit = function(initUnit) {
-    var unitPairs = {'gal':'L', 'L':'gal', 'lbs':'kg', 'kg':'lbs', 'mi':'km', 'km': 'mi'}
-    var result;
+    var unitPairs = {'gal':'l', 'l':'gal', 'lbs':'kg', 'kg':'lbs', 'mi':'km', 'km': 'mi'}
+    var result; 
     result = unitPairs[initUnit];
     return result;
   };
 
   this.spellOutUnit = function(unit) {
-    var spelledOutUnits = {'gal':'gallons', 'L':'liters', 'lbs':'pounds', 'kg':'kilograms', 'mi':'miles', 'km': 'kilometers'}
+    var spelledOutUnits = {'gal':'gallons', 'l':'liters', 'lbs':'pounds', 'kg':'kilograms', 'mi':'miles', 'km': 'kilometers'}
     var result;
-    result = spelledOutUnits[unit];
+    result = spelledOutUnits[unit.toLowerCase()]; 
     return result;
   };
   
@@ -54,7 +49,7 @@ function ConvertHandler() {
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
-    var convertFactor = {'gal':3.78541, 'L':1/3.78541, 'lbs':0.453592, 'kg':1/0.453592, 'mi':1.60934, 'km': 1/1.60934}
+    var convertFactor = {'gal':3.78541, 'l':1/3.78541, 'lbs':0.453592, 'kg':1/0.453592, 'mi':1.60934, 'km': 1/1.60934}
     var result;
     result = initNum * convertFactor[initUnit];
     return result;
